@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://intern-assignment-bpz2.onrender.com/api/auth/login",
         {
           email,
           password,

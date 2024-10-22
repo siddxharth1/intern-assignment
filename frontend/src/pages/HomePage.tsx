@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
   const verifyToken = async (token: string) => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/invoices/products",
+        "https://intern-assignment-bpz2.onrender.com/api/invoices/products",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/invoices/add-product",
+        "https://intern-assignment-bpz2.onrender.com/api/invoices/add-product",
         {
           name,
           price: Number(price),
@@ -97,7 +97,7 @@ const HomePage: React.FC = () => {
   const getPdf = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/invoices/convert-pdf",
+        "https://intern-assignment-bpz2.onrender.com/api/invoices/convert-pdf",
         {
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob", // This is crucial for binary files

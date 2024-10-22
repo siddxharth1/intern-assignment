@@ -23,11 +23,14 @@ const SignupPage: React.FC = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        "https://intern-assignment-bpz2.onrender.com/api/auth/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       navigate("/login"); // Redirect to login after successful signup
     } catch (error) {
       console.error("Signup failed", error);

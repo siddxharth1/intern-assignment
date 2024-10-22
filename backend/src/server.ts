@@ -9,7 +9,12 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://intern-assignment-navy.vercel.app/login", // Frontend origin
+    credentials: true, // Allows cookies to be sent
+  })
+);
 
 app.use(express.json());
 

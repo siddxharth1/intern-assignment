@@ -11,8 +11,9 @@ connectDB();
 const app = express();
 app.use(
   cors({
-    origin: "https://intern-assignment-navy.vercel.app/login", // Frontend origin
-    credentials: true, // Allows cookies to be sent
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 

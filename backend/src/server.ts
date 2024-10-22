@@ -9,12 +9,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Frontend origin
-    credentials: true, // Allows cookies to be sent
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 

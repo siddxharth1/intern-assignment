@@ -11,7 +11,11 @@ connectDB();
 const app = express();
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://intern-assignment-navy.vercel.app",
+      "http://localhost:5173",
+      "https://intern-assignment-bpz2.onrender.com",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

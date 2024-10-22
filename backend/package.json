@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon"
+    "start": "npx nodemon src/index.ts",
+    "dev": "npx nodemon src/index.ts",
+    "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../frontend && npm run build && @powershell Copy-Item -Recurse dist ../backend",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",

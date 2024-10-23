@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const savedToken = Cookies.get("token");
     if (savedToken) {
@@ -22,6 +22,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://intern-assignment-bpz2.onrender.com/api/auth/login",
@@ -37,6 +38,8 @@ const LoginPage: React.FC = () => {
       navigate("/");
     } catch (error) {
       console.error("Login failed", error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -103,7 +106,7 @@ const LoginPage: React.FC = () => {
                 type="submit"
                 className="px-6 py-2.5 bg-[#CCF575] text-black font-semibold rounded-lg hover:bg-opacity-90 transition-colors"
               >
-                Login now
+                {loading ? "Loading..." : "Login"}
               </button>
               <a
                 href="#"

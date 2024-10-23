@@ -10,6 +10,7 @@ const SignupPage: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,6 +23,7 @@ const SignupPage: React.FC = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(
         "https://intern-assignment-bpz2.onrender.com/api/auth/register",
@@ -31,9 +33,11 @@ const SignupPage: React.FC = () => {
           password,
         }
       );
-      navigate("/login"); // Redirect to login after successful signup
+      navigate("/login");
     } catch (error) {
       console.error("Signup failed", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,7 +45,7 @@ const SignupPage: React.FC = () => {
     <div className="flex bg-[#141414] min-h-[calc(100vh-66px)]">
       <div className="w-0 sm:w-[45%] flex items-center justify-center">
         <img
-          src={SignupImage} // Replace with the appropriate image for signup
+          src={SignupImage}
           alt="Signup"
           className="hidden sm:block h-[80vh] object-cover rounded-r-3xl"
         />
@@ -56,9 +60,7 @@ const SignupPage: React.FC = () => {
             <p className="text-gray-400">Sign up to start your journey!</p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSignup} className="space-y-6">
-            {/* Name Field */}
             <div className="space-y-2">
               <label htmlFor="name" className="block font-medium text-white">
                 Name
@@ -73,7 +75,6 @@ const SignupPage: React.FC = () => {
               />
             </div>
 
-            {/* Email Field */}
             <div className="space-y-2">
               <label htmlFor="email" className="block font-medium text-white">
                 Email Address
@@ -88,7 +89,6 @@ const SignupPage: React.FC = () => {
               />
             </div>
 
-            {/* Password Field */}
             <div className="space-y-2">
               <label
                 htmlFor="password"
@@ -106,13 +106,12 @@ const SignupPage: React.FC = () => {
               />
             </div>
 
-            {/* Signup Button */}
             <div className="flex items-center pt-2">
               <button
                 type="submit"
                 className="px-6 py-2.5 bg-[#CCF575] text-black font-semibold rounded-lg hover:bg-opacity-90 transition-colors"
               >
-                Signup
+                {loading ? "Signing up..." : "Signup"}
               </button>
             </div>
           </form>

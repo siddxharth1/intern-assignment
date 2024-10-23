@@ -97,7 +97,10 @@ export const convertToPDF = async (
     // Generate the HTML content for the invoice
     const htmlContent = generateInvoiceHTML(invoice);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      timeout: 0,
+    });
     const page = await browser.newPage();
 
     // Set the content directly from HTML

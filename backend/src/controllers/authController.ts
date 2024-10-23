@@ -67,7 +67,6 @@ export const verifyToken = async (req: any, res: Response) => {
     try {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-      console.log(decoded);
       res.json({ success: true });
     } catch (error) {
       res.status(401).json({ message: "Not authorized, token failed" });

@@ -31,7 +31,6 @@ const LoginPage: React.FC = () => {
         },
         { withCredentials: true }
       );
-      console.log(response.data);
       const { token } = response.data;
       Cookies.set("token", token, { sameSite: "lax", secure: false });
       dispatch(setToken(token));

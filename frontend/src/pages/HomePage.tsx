@@ -5,6 +5,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { RootState } from "../store/store";
 import { setToken } from "../store/authSlice";
+import { FaArrowDownAZ } from "react-icons/fa6";
+import { FaArrowUpZA } from "react-icons/fa6";
+import { FaArrowDownWideShort } from "react-icons/fa6";
+import { FaArrowDownShortWide } from "react-icons/fa6";
 
 interface Product {
   name: string;
@@ -32,6 +36,11 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [sortColumn, setSortColumn] = useState<keyof Product | "totalPrice">(
+    "name"
+  );
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [fetcing, setFetching] = useState(false);
 
   useEffect(() => {
     const savedToken = Cookies.get("token");
@@ -39,13 +48,14 @@ const HomePage: React.FC = () => {
       navigate("/login");
     } else {
       dispatch(setToken(savedToken));
-      verifyToken(savedToken);
+      getProducts(savedToken);
     }
     setLoading(false);
   }, [dispatch, navigate]);
 
-  const verifyToken = async (token: string) => {
+  const getProducts = async (token: string) => {
     try {
+      setFetching(true);
       const { data } = await axios.get(
         "https://intern-assignment-bpz2.onrender.com/api/invoices/products",
         {
@@ -62,6 +72,8 @@ const HomePage: React.FC = () => {
     } catch (error) {
       Cookies.remove("token");
       navigate("/login");
+    } finally {
+      setFetching(false);
     }
   };
 
@@ -116,6 +128,35 @@ const HomePage: React.FC = () => {
     } catch (error) {
       console.error("Failed to generate PDF", error);
     }
+  };
+
+  const sortData = (column: keyof Product | "totalPrice") => {
+    const newDirection =
+      sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
+    setSortDirection(newDirection);
+    setSortColumn(column);
+
+    const sortedProducts = [...invoiceData.products].sort((a, b) => {
+      let compareValueA =
+        column === "totalPrice" ? a.price * a.quantity : a[column];
+      let compareValueB =
+        column === "totalPrice" ? b.price * b.quantity : b[column];
+
+      if (
+        typeof compareValueA === "string" &&
+        typeof compareValueB === "string"
+      ) {
+        return newDirection === "asc"
+          ? compareValueA.localeCompare(compareValueB)
+          : compareValueB.localeCompare(compareValueA);
+      } else {
+        return newDirection === "asc"
+          ? Number(compareValueA) - Number(compareValueB)
+          : Number(compareValueB) - Number(compareValueA);
+      }
+    });
+
+    setInvoiceData({ ...invoiceData, products: sortedProducts });
   };
 
   if (loading) {
@@ -197,13 +238,67 @@ const HomePage: React.FC = () => {
           <table className="w-full">
             <thead>
               <tr className="bg-white text-black">
-                <th className="text-left px-6 py-3">Product name</th>
-                <th className="text-left px-6 py-3">Quantity</th>
-                <th className="text-left px-6 py-3">Price</th>
-                <th className="text-left px-6 py-3">Total Price</th>
+                <th
+                  className="text-left px-6 py-3 cursor-pointer"
+                  onClick={() => sortData("name")}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>Product name</span>
+                    <span>
+                      {sortColumn === "name" && sortDirection === "asc" ? (
+                        <FaArrowDownAZ />
+                      ) : (
+                        <FaArrowUpZA />
+                      )}
+                    </span>
+                  </div>
+                </th>
+                <th
+                  className="text-left px-6 py-3 cursor-pointer"
+                  onClick={() => sortData("quantity")}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>Quantity</span>
+                    <span>
+                      {sortColumn === "quantity" && sortDirection === "asc" ? (
+                        <FaArrowDownShortWide />
+                      ) : (
+                        <FaArrowDownWideShort />
+                      )}
+                    </span>
+                  </div>
+                </th>
+                <th
+                  className="text-left px-6 py-3 cursor-pointer"
+                  onClick={() => sortData("price")}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>Price</span>
+                    <span>
+                      {sortColumn === "price" && sortDirection === "asc" ? (
+                        <FaArrowDownShortWide />
+                      ) : (
+                        <FaArrowDownWideShort />
+                      )}
+                    </span>
+                  </div>
+                </th>
+                <th
+                  className="text-left px-6 py-3 cursor-pointer"
+                  onClick={() => sortData("totalPrice")}
+                >
+                  Total Price
+                </th>
               </tr>
             </thead>
             <tbody>
+              {fetcing && (
+                <tr>
+                  <td colSpan={4} className="text-center py-4">
+                    Loading...
+                  </td>
+                </tr>
+              )}
               {invoiceData.products.map((product, index) => (
                 <tr
                   key={product._id || index}
@@ -218,10 +313,12 @@ const HomePage: React.FC = () => {
                 </tr>
               ))}
               <tr className="border-t border-gray-700">
-                <td colSpan={3} className="px-6 py-4 text-right">
-                  +GST 18%
+                <td></td>
+                <td></td>
+                <td className="px-6 py-4 ">+GST 18%</td>
+                <td className="px-6 py-4">
+                  INR {invoiceData.total + invoiceData.gst}
                 </td>
-                <td className="px-6 py-4">INR {invoiceData.gst.toFixed(1)}</td>
               </tr>
             </tbody>
           </table>

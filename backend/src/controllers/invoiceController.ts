@@ -63,7 +63,6 @@ export const getProducts = async (
 ): Promise<any> => {
   try {
     const invoice = await Invoice.findOne({ user: req?.user._id });
-    console.log(invoice);
     if (!invoice) {
       return res.json({
         success: true,

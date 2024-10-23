@@ -1,5 +1,4 @@
 export const generateInvoiceHTML = (invoice: any) => {
-  console.log("invoice", invoice);
   const { _id, user, products, total, gst } = invoice;
 
   const productsRows = products

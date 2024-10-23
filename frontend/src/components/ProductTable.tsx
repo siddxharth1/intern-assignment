@@ -126,16 +126,20 @@ const ProductTable = ({
               </td>
             </tr>
           )}
-          {invoiceData.products.map((product, index) => (
-            <tr key={product._id || index} className="border-t border-gray-700">
-              <td className="px-6 py-4">{product.name}</td>
-              <td className="px-6 py-4">{product.quantity}</td>
-              <td className="px-6 py-4">{product.price}</td>
-              <td className="px-6 py-4">
-                $ {(product.price * product.quantity).toFixed(2)}
-              </td>
-            </tr>
-          ))}
+          {!fetcing &&
+            invoiceData.products.map((product, index) => (
+              <tr
+                key={product._id || index}
+                className="border-t border-gray-700"
+              >
+                <td className="px-6 py-4">{product.name}</td>
+                <td className="px-6 py-4">{product.quantity}</td>
+                <td className="px-6 py-4">{product.price}</td>
+                <td className="px-6 py-4">
+                  $ {(product.price * product.quantity).toFixed(2)}
+                </td>
+              </tr>
+            ))}
           <tr className="border-t border-gray-700">
             <td></td>
             <td></td>

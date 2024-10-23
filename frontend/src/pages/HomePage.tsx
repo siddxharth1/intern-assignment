@@ -72,8 +72,9 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#141414] text-white p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#141414] text-white p-8 relative">
+      <div className="absolute radial-gradient-circle3 w-[300px] h-[300px] -top-28 right-1/3 z-50"></div>
+      <div className="max-w-6xl mx-auto mt-10">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Add Products</h1>
           <p className="text-gray-400">

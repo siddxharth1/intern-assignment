@@ -42,7 +42,10 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="flex bg-[#141414] min-h-[calc(100vh-66px)]">
+    <div className="flex bg-[#141414] min-h-[calc(100vh-66px)] relative overflow-hidden">
+      <div className="absolute radial-gradient-circle w-[500px] h-[500px] -top-28 -right-32"></div>
+      <div className="-z-2 absolute radial-gradient-circle2 w-[500px] h-[500px] top-96 -left-64"></div>
+
       <div className="w-0 sm:w-[45%] flex items-center justify-center">
         <img
           src={SignupImage}

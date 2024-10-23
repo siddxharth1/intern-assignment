@@ -1,0 +1,11 @@
+.radial-gradient-circle {
+    background: radial-gradient(circle 260px, #4f59a85e, transparent);
+}
+
+.radial-gradient-circle2 {
+    background: radial-gradient(circle 260px, #cdf57563, transparent);
+}
+
+.radial-gradient-circle3 {
+    background: radial-gradient(circle 120px, #4f59a85e, transparent);
+}

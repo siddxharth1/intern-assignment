@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 const App: React.FC = () => {
   return (
-    <div className="bg-[#141414] min-h-screen text-white">
+    <div className="bg-[#141414] min-h-screen text-white sid">
       <Router>
         <Navbar />
         <Routes>

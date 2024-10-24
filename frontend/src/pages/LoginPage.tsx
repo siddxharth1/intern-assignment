@@ -44,8 +44,8 @@ const LoginPage: React.FC = () => {
   };
   return (
     <div className="flex bg-[#141414] min-h-[calc(100vh-66px)] relative overflow-hidden">
-      <div className="absolute radial-gradient-circle w-[500px] h-[500px] -top-28 -right-32"></div>
-      <div className="-z-2 absolute radial-gradient-circle2 w-[500px] h-[500px] top-96 -left-64"></div>
+      <div className="pointer-events-none -z-2 absolute radial-gradient-circle w-[500px] h-[500px] -top-28 -right-32"></div>
+      <div className="pointer-events-none -z-2 absolute radial-gradient-circle2 w-[500px] h-[500px] top-96 -left-64"></div>
 
       <div className="z-10 w-0 sm:w-[45%] flex items-center justify-center">
         <img
@@ -55,7 +55,7 @@ const LoginPage: React.FC = () => {
         />
       </div>
 
-      <div className=" w-full sm:w-[55%] flex items-center  px-10">
+      <div className="w-full sm:w-[55%] flex items-center  px-10">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-white mb-3">
@@ -107,6 +107,7 @@ const LoginPage: React.FC = () => {
             <div className="flex items-center  pt-2 gap-10">
               <button
                 type="submit"
+                disabled={loading}
                 className="px-6 py-2.5 bg-[#CCF575] text-black font-semibold rounded-lg hover:bg-opacity-90 transition-colors"
               >
                 {loading ? "Loading..." : "Login"}

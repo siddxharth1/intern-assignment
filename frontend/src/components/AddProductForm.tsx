@@ -121,6 +121,7 @@ const AddProductForm = ({
 
       <button
         type="submit"
+        disabled={addingData}
         className="bg-[#2A2A2A] text-[#CCF575] px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-opacity-80 transition-colors mb-8"
       >
         {addingData ? (
